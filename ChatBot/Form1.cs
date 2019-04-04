@@ -96,7 +96,7 @@ namespace ChatBot
         }
 
         string[] greetings = new string[] { "Hi Jon", "Hello Jon!", "Hey Jon, How are you?" };
-        string[] jokes = new string[] { "what do you call 100 niggers in the ground? a fucking miracle",
+        string[] jokes = new string[] { "*",
             "have you ever seen Stevie Wonders wife? No, neither has he" };
 
         public string Greetings_Action()

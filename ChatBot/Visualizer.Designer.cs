@@ -1,6 +1,6 @@
 ﻿namespace ChatBot
 {
-    partial class Form1
+    partial class Visualizer
     {
         /// <summary>
         /// Required designer variable.
@@ -78,7 +78,7 @@
             this.lblState.TabIndex = 4;
             this.lblState.Text = "State: Awake";
             // 
-            // Form1
+            // Visualizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -89,7 +89,7 @@
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.txtInput);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "Form1";
+            this.Name = "Visualizer";
             this.Text = "jonvis";
             this.ResumeLayout(false);
             this.PerformLayout();

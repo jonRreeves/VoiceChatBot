@@ -65,20 +65,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Films.cs" />
-    <Compile Include="FilmsProxy.cs" />
+    <Compile Include="Controllers\Weather\WeatherProxy.cs" />
+    <Compile Include="Models\StarWars\Films.cs" />
+    <Compile Include="Controllers\StarWars\FilmsProxy.cs" />
+    <Compile Include="Models\Weather\WeatherModel.cs" />
+    <Compile Include="StarWarsVisualizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StarWarsVisualizer.Designer.cs">
+      <DependentUpon>StarWarsVisualizer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Visualizer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Visualizer.Designer.cs">
       <DependentUpon>Visualizer.cs</DependentUpon>
     </Compile>
-    <Compile Include="People.cs" />
-    <Compile Include="PeopleProxy.cs" />
-    <Compile Include="PlanetProxy.cs" />
-    <Compile Include="Planets.cs" />
+    <Compile Include="Models\StarWars\People.cs" />
+    <Compile Include="Controllers\StarWars\PeopleProxy.cs" />
+    <Compile Include="Controllers\StarWars\PlanetProxy.cs" />
+    <Compile Include="Models\StarWars\Planets.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="StarWarsVisualizer.resx">
+      <DependentUpon>StarWarsVisualizer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Visualizer.resx">
       <DependentUpon>Visualizer.cs</DependentUpon>
     </EmbeddedResource>

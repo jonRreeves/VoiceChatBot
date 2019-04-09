@@ -11,6 +11,9 @@ namespace ChatBot
 {
     public class PeopleProxy
     {
+
+        Visualizer vis = new Visualizer();
+
         public async static Task<People> GetPeople(int id)
         {
             var http = new HttpClient();
@@ -40,7 +43,6 @@ namespace ChatBot
             return data;
 
         }
-
 
     }
 }

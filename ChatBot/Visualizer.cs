@@ -17,16 +17,28 @@ using System.Net;
 using Newtonsoft.Json;
 using System.Collections;
 using Newtonsoft.Json.Linq;
+using ChatBot.Models.Weather;
+using ChatBot.Controllers.Weather;
+using static ChatBot.Models.Weather.WeatherModel;
 
 namespace ChatBot
 {
+    // TODO - states (menus) i.e certain actions can only be performed from certain states (custom dictionaries), prevents overlapping of keywords and confusion in one state
+    // setupState | keyword: setup | file: profile.txt (names, ages, location) 
+    // mainState | keyword: menu | file: commands.txt time/date functionality, open close programs, jokes, recall (name,age), weather report etc. anything that is not specific done
+    // starWarsState | keyword: star wars | file: starwars.txt done
+    // writingState | keyword: write | file dictionary.txt
+    // searchingState | keyword: search | file searchdictionary.txt
+
+    // TODO - move states to own classes
+    // each class needs to initialise its own grammar file + commands + choices
 
     public partial class Visualizer : Form
     {
 
         //Commands and responses
-        string[] commandsFile = (File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\commands.txt"));
-        string[] responseFile = (File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\responses.txt"));
+        string[] commandsFile = File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\commands.txt");
+        string[] responseFile = File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\responses.txt");
 
         //Speech Synthesizer
         SpeechSynthesizer speechSynth = new SpeechSynthesizer();
@@ -35,50 +47,9 @@ namespace ChatBot
         Choices commandsList = new Choices();
         SpeechRecognitionEngine speechRecognition = new SpeechRecognitionEngine();
 
-        //SwAPI commands
-        public async void GetCharacterInfo(int id)
-        {
-            People people = await PeopleProxy.GetPeople(id);
-            Planets planets = await PlanetProxy.GetPlanets(people.homeworld);
-            Say(people.name + " has been in " + people.films.Length + " star wars films." + " They have " + people.hair_color + " hair and " + people.eye_color + " eyes. "
-                + "They are from the planet " + planets.name);
-        }
-
-        public async void GetPlanetInfo(string planetName)
-        {
-            Planets planets = await PlanetProxy.GetPlanets(planetName);
-
-            string names = "";
-
-            for (int i = 0; i < planets.residents.Length; i++)
-            {
-                var characters = await PeopleProxy.GetPeople(planets.residents[i]);
-                if (i != planets.residents.Length - 1)
-                {
-                    names += characters.name + ", ";
-                }
-                else
-                {
-                    names += " and " + characters.name + ".";
-                }
-            }
-
-            Say("The planet " + planets.name + " is a " + planets.terrain + " type planet. The climate is " + planets.climate + ".  It has a population of " + planets.population
-                + ". It is home to the characters " + names);
-        }
-
-        public async void GetFilmInfo(int id)
-        {
-            Films films = await FilmsProxy.GetFilms(id);
-
-            Say(films.title + ", episode " + films.episode_id + ". " + films.opening_crawl.Replace("\r\n", " "));
-        }
-
-
-
         public Visualizer()
         {
-            
+
             //Initialize Grammar (commands)
             commandsList.Add(commandsFile);
             Grammar grammar = new Grammar(new GrammarBuilder(commandsList));
@@ -87,7 +58,7 @@ namespace ChatBot
             {
                 speechRecognition.RequestRecognizerUpdate();
                 speechRecognition.LoadGrammar(grammar);
-                speechRecognition.SpeechRecognized += rec_SpeechRecognized;
+                speechRecognition.SpeechRecognized += menu_SpeechRecognized;
                 speechRecognition.SetInputToDefaultAudioDevice();
                 speechRecognition.RecognizeAsync(RecognizeMode.Multiple);
             }
@@ -98,10 +69,13 @@ namespace ChatBot
 
             //Custom voice settings
             speechSynth.SelectVoiceByHints(VoiceGender.Female);
-            speechSynth.Speak("Hello Jon");
+            speechSynth.Speak("Hello Jon, main menu");
 
             InitializeComponent();
+            lblState.Text = "State: Main Menu";
         }
+
+        
 
         public void Say(string text)
         {
@@ -142,121 +116,103 @@ namespace ChatBot
             proc = null;
         }
 
+        public async void GetWeather(string location)
+        {
+            RootObject w = await WeatherProxy.GetWeather(location);
 
+            Say($"It is currently {((int)(w.main.temp)-273).ToString()} degrees in {location}. With highs of {((int)(w.main.temp_max)-273).ToString()}" +
+                $" degrees and lows of {((int)(w.main.temp_min)-273).ToString()} degrees. It is forecast to be {w.weather[0].description} ");
+            
+            
+        }
+
+        public bool listening = true;
 
         // Commands
-        private void rec_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        private void menu_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            string result = e.Result.Text;
-            int response = Array.IndexOf(commandsFile, result);
-            txtInput.AppendText(result + "\n");
-            if (responseFile[response].IndexOf('+') == 0)
+            if (listening)
             {
-                List<string> responses = responseFile[response].Replace('+', ' ').Split('/').Reverse().ToList();
-                Random r = new Random();
-                Say(responses[r.Next(responses.Count)]);
-            }
-            else
-            {
-                if (responseFile[response].IndexOf('*') == 0)
-                {
-                    if (result.Contains("time"))
-                    {
-                        Say(DateTime.Now.ToString("h:mm tt"));
-                    }
-                    if (result.Contains("today"))
-                    {
-                        Say(DateTime.Now.ToString("dd/M/yyy"));
-                    }
-                    if (result.Contains("google"))
-                    {
-                        Process.Start("https://google.com");
-                    }
-                    if (result.Contains("open"))
-                    {
-                        Process.Start(@"C:\Program Files\Sublime Text 3\sublime_text.exe");
-                    }
-                    if (result.Contains("close"))
-                    {
-                        CloseProgram("sublime_text");
-                    }
-                    if (result.Contains("spotify"))
-                    {
-                        Process.Start(@"C:\Users\Jon\AppData\Roaming\Spotify\Spotify.exe");
-                    }
-                    if (result.Contains("play") || result.Contains("pause"))
-                    {
-                        SendKeys.Send(" ");
-                    }
-                    if (result.Contains("skip"))
-                    {
-                        SendKeys.Send("^{RIGHT}");
-                    }
-                    if (result.Contains("back"))
-                    {
-                        SendKeys.Send("^{LEFT}");
-                    }
-                    if (result.Contains("name"))
-                    {
-                        // TODO - update this with name variable, maybe store it to file when you open the program
-                        Say("Your name is Jon");
-                    }
-                    if (result.Contains("shut"))
-                    {
-                        Environment.Exit(0);
-                    }
-                    if (result.Contains("luke"))
-                    {
-                        GetCharacterInfo(1);
-                    }
-                    if (result.Contains("r"))
-                    {
-                        GetCharacterInfo(3);
-                    }
-                    if (result.Contains("tatooine"))
-                    {
-                        GetPlanetInfo("https://swapi.co/api/planets/1/");
-                    }
-                    if (result.Contains("naboo"))
-                    {
-                        GetPlanetInfo("https://swapi.co/api/planets/8/");
-                    }
-                    if (result.Contains("new"))
-                    {
-                        GetFilmInfo(1);
-                    }
-                    if (result.Contains("empire"))
-                    {
-                        GetFilmInfo(2);
-                    }
-                    if (result.Contains("jedi"))
-                    {
-                        GetFilmInfo(3);
-                    }
-                    if (result.Contains("menace"))
-                    {
-                        GetFilmInfo(4);
-                    }
-                    if (result.Contains("clones"))
-                    {
-                        GetFilmInfo(5);
-                    }
-                    if (result.Contains("sith"))
-                    {
-                        GetFilmInfo(6);
-                    }
-                    if (result.Contains("force"))
-                    {
-                        GetFilmInfo(7);
-                    }
+                string result = e.Result.Text;
+                int response = Array.IndexOf(commandsFile, result);
+                txtInput.AppendText(result + "\n");
 
+                if (responseFile[response].IndexOf('+') == 0)
+                {
+                    List<string> responses = responseFile[response].Replace('+', ' ').Split('/').Reverse().ToList();
+                    Random r = new Random();
+                    Say(responses[r.Next(responses.Count)]);
                 }
                 else
                 {
-                    Say(responseFile[response]);
-                }
-            }
+                    if (responseFile[response].IndexOf('*') == 0)
+                    {
+                        if (result.Contains("time"))
+                        {
+                            Say(DateTime.Now.ToString("h:mm tt"));
+                        }
+                        if (result.Contains("today"))
+                        {
+                            Say(DateTime.Now.ToString("dd/M/yyy"));
+                        }
+                        if (result.Contains("google"))
+                        {
+                            Process.Start("https://google.com");
+                        }
+                        if (result.Contains("open"))
+                        {
+                            Process.Start(@"C:\Program Files\Sublime Text 3\sublime_text.exe");
+                        }
+                        if (result.Contains("close"))
+                        {
+                            CloseProgram("sublime_text");
+                        }
+                        if (result.Contains("spotify"))
+                        {
+                            Process.Start(@"C:\Users\Jon\AppData\Roaming\Spotify\Spotify.exe");
+                        }
+                        if (result.Contains("play") || result.Contains("pause"))
+                        {
+                            SendKeys.Send(" ");
+                        }
+                        if (result.Contains("skip"))
+                        {
+                            SendKeys.Send("^{RIGHT}");
+                        }
+                        if (result.Contains("back"))
+                        {
+                            SendKeys.Send("^{LEFT}");
+                        }
+                        if (result.Contains("name"))
+                        {
+                            // TODO - update this with name variable, maybe store it to file when you open the program
+                            Say("Your name is Jon");
+                        }
+                        if (result.Contains("shut"))
+                        {
+                            Environment.Exit(0);
+                        }
+                        if (result.Contains("star"))
+                        {
+                            Hide();
+                            StarWarsVisualizer swv = new StarWarsVisualizer();
+                            swv.Show();
+                            swv.listening = true;
+                            listening = false;
+                        }
+                        if (result.Contains("weather"))
+                        {
+                            GetWeather("bournemouth");
+                        }
 
+                    }
+                    else
+                    {
+                        Say(responseFile[response]);
+                    }
+                }
+
+            }
         }
 
         // TODO - Sleep and wake functions, maybe activate only on call like "Alexa" "ok google" style

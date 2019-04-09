@@ -14,8 +14,10 @@ Current build:-
 
 - send keys to programs (spotify)
 
-- jokes
+- jokes from official_joke_api
 
 - SWAPI calls/get methods (character info, planet info, film info)
 
-- weather report using openweather api
+- weather report using openweathermap api
+
+- IMDb data using OMDb api

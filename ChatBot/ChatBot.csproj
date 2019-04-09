@@ -119,6 +119,8 @@
   <ItemGroup>
     <Content Include="commands and responses\commands.txt" />
     <Content Include="commands and responses\responses.txt" />
+    <Content Include="commands and responses\swcommands.txt" />
+    <Content Include="commands and responses\swresponses.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

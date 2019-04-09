@@ -14,14 +14,5 @@ good job
 tell me a joke
 whats my name
 shut down
-luke
-r 2
-tatooine
-naboo
-a new hope
-the empire strikes back
-return of the jedi
-the phantom menace
-attack of the clones
-revenge of the sith
-the force awakens
+star
+weather

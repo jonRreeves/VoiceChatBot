@@ -15,7 +15,7 @@ namespace ChatBot
 {
     public partial class StarWarsVisualizer : Form
     {
-
+        // TODO - move methods to relevant proxies
         string[] commandsFile = (File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\swcommands.txt"));
         string[] responseFile = (File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\swresponses.txt"));
 

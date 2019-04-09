@@ -65,7 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MovieProxy.cs" />
+    <Compile Include="Controllers\JokeProxy.cs" />
+    <Compile Include="Controllers\Weather\WeatherHourlyModel.cs" />
     <Compile Include="Controllers\Weather\WeatherProxy.cs" />
+    <Compile Include="Models\JokeModel.cs" />
+    <Compile Include="Models\MovieModel.cs" />
     <Compile Include="Models\StarWars\Films.cs" />
     <Compile Include="Controllers\StarWars\FilmsProxy.cs" />
     <Compile Include="Models\Weather\WeatherModel.cs" />

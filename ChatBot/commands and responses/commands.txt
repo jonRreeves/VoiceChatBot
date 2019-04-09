@@ -11,8 +11,10 @@ pause
 skip
 back
 good job
-tell me a joke
+joke
 whats my name
 shut down
 star
 weather
+film
+1

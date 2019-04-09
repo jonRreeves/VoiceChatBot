@@ -1,25 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Speech.Synthesis;
 using System.Speech.Recognition;
 using System.Diagnostics;
-using System.Xml;
 using System.IO;
-using System.Net.Http;
-using System.Net;
-using Newtonsoft.Json;
-using System.Collections;
-using Newtonsoft.Json.Linq;
-using ChatBot.Models.Weather;
 using ChatBot.Controllers.Weather;
 using static ChatBot.Models.Weather.WeatherModel;
+using ChatBot.Models;
+using ChatBot.Controllers;
 
 namespace ChatBot
 {
@@ -32,6 +23,14 @@ namespace ChatBot
 
     // TODO - move states to own classes
     // each class needs to initialise its own grammar file + commands + choices
+
+    /* TODO - pass input from voice to query movie database
+       big dictionary 
+       try catch incase of 404
+       replace " " in strings with "_"
+    */
+
+    // TODO - figure out storing voice input in variables and using them in api queries | maybe use seperate form and listener for search features, so can use input as search term
 
     public partial class Visualizer : Form
     {
@@ -76,7 +75,7 @@ namespace ChatBot
         }
 
         
-
+        // voice output, shows output on gui for debugging
         public void Say(string text)
         {
             speechSynth.SpeakAsync(text);
@@ -118,14 +117,44 @@ namespace ChatBot
 
         public async void GetWeather(string location)
         {
-            RootObject w = await WeatherProxy.GetWeather(location);
+            // unix time | +1 hour = + 3600 | +1 day = +86400
+            var epoch = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
 
-            Say($"It is currently {((int)(w.main.temp)-273).ToString()} degrees in {location}. With highs of {((int)(w.main.temp_max)-273).ToString()}" +
-                $" degrees and lows of {((int)(w.main.temp_min)-273).ToString()} degrees. It is forecast to be {w.weather[0].description} ");
-            
-            
+            RootObject weather = await WeatherProxy.GetWeatherConnector(location);
+            WeatherHourlyModel.Rootobject hourly = await WeatherProxy.GetHourlyWeatherConnector(location);
+
+            // With highs of {((int)(w.main.temp_max)-273).ToString()}" +
+            // $" degrees and lows of {((int)(w.main.temp_min) - 273).ToString()} degrees.
+
+            Say($"It is currently {((int)(weather.main.temp) - 273).ToString()} degrees in {location}. It is forecast to be {weather.weather[0].description}, with {weather.main.humidity} % humidity." +
+                $" Wind speeds of {((int)(weather.wind.speed) * 2.23694).ToString("0.0")} miles per hour. In one hour it will be {((int)(hourly.list[1].main.temp) - 273).ToString()}" +
+                $" degrees and {hourly.list[1].weather[0].description}. In two hours it will be {((int)(hourly.list[2].main.temp) - 273).ToString()} degrees and" +
+                $" {hourly.list[2].weather[0].description}. Tomorrow is forecast to be {hourly.list[24].weather[0].description}.");
+
         }
 
+        public async void GetJoke()
+        {
+            JokeModel joke = await JokeProxy.GetJokeConnector();
+
+            Say(joke.setup + joke.punchline);
+        }
+
+        public async void GetMovie(string filmId)
+        {
+            MovieModel movie = await MovieProxy.GetMovieConnector(filmId);
+
+            Say($"{movie.Title} {movie.Released} directed by {movie.Director}, produced by {movie.Production}. {movie.Plot}. {movie.Awards}. {movie.imdbRating}");
+        }
+
+        public async void GetMovieByTitle(string filmId)
+        {
+            MovieModel movie = await MovieProxy.GetMovieByTitle(filmId);
+
+            Say($"{movie.Title} {movie.Released} directed by {movie.Director}, produced by {movie.Production}. {movie.Plot}. {movie.Awards}. {movie.imdbRating}");
+        }
+
+        // used to switch between forms, so that dictionaries (command files) do not overlap
         public bool listening = true;
 
         // Commands
@@ -153,7 +182,7 @@ namespace ChatBot
                         }
                         if (result.Contains("today"))
                         {
-                            Say(DateTime.Now.ToString("dd/M/yyy"));
+                            Say(DateTime.Now.ToString("dd/MM/yyy"));
                         }
                         if (result.Contains("google"))
                         {
@@ -203,6 +232,18 @@ namespace ChatBot
                         if (result.Contains("weather"))
                         {
                             GetWeather("bournemouth");
+                        }
+                        if (result.Contains("joke"))
+                        {
+                            GetJoke();
+                        }
+                        if (result.Contains("film"))
+                        {
+                            GetMovie("tt3896198");                           
+                        }
+                        if (result.Contains("1"))
+                        {
+                            GetMovieByTitle("the_matrix");
                         }
 
                     }

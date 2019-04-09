@@ -17,3 +17,5 @@ Current build:-
 - jokes
 
 - SWAPI calls/get methods (character info, planet info, film info)
+
+- weather report using openweather api

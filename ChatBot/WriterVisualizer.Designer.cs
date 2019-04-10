@@ -1,6 +1,6 @@
 ﻿namespace ChatBot
 {
-    partial class StarWarsVisualizer
+    partial class WriterVisualizer
     {
         /// <summary>
         /// Required designer variable.
@@ -48,7 +48,7 @@
             this.txtOutput.Location = new System.Drawing.Point(128, 25);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(91, 344);
+            this.txtOutput.Size = new System.Drawing.Size(91, 66);
             this.txtOutput.TabIndex = 1;
             // 
             // lblInput
@@ -74,22 +74,22 @@
             this.lblState.AutoSize = true;
             this.lblState.Location = new System.Drawing.Point(12, 110);
             this.lblState.Name = "lblState";
-            this.lblState.Size = new System.Drawing.Size(115, 13);
+            this.lblState.Size = new System.Drawing.Size(71, 13);
             this.lblState.TabIndex = 4;
-            this.lblState.Text = "State: Star Wars Menu";
+            this.lblState.Text = "State: Writing";
             // 
-            // StarWarsVisualizer
+            // WriterVisualizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(231, 381);
+            this.ClientSize = new System.Drawing.Size(231, 138);
             this.Controls.Add(this.lblState);
             this.Controls.Add(this.lblOutput);
             this.Controls.Add(this.lblInput);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.txtInput);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "StarWarsVisualizer";
+            this.Name = "WriterVisualizer";
             this.Text = "jonvis";
             this.ResumeLayout(false);
             this.PerformLayout();

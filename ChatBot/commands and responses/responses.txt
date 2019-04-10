@@ -1,9 +1,14 @@
-+Hi Jon/Hello Jon!/Hey Jon, How are you?
-+Yeah, you?/living the dream/fine thanks
++Hi Jon/Hello Jon!/Hey Jon, How are you?/Hello yourself
+I am Jon vis, a voice bot created by Jon to perform various tasks.
++Yeah, you?/Living the dream/Fine thanks/I'm a bit bored today/I'm ok/I'm blue, dah bah dee dah bah die
+Not yet. Smiley Face
+I can do many things. I can tell you the time and the date. I can give you a weather report. I can tell you a joke haha. I can open and close programs, and even control them. I can search the internet. I can give you information about movies. If you want some star wars trivia, say Star Wars and I'll link up with the Star Wars API and hit you with some facts.
 *time
 *today
 *opengoogle
-*open
+*recent
+*tab
+*notepad
 *close
 *spotify
 *play
@@ -16,5 +21,10 @@ thats what i'm here for
 *shut
 *star
 *weather
-*film
-*1
+*lot
+*search
++No, thank you/no problem/you're welcome
++No, thank you/no problem/you're welcome
++Its all in the punchline/hahahaha/I'm here all night
++Its all in the punchline/hahahaha/I'm here all night
+*movie

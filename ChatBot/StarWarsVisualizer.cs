@@ -36,6 +36,10 @@ namespace ChatBot
             {
                 pronoun = "He";
             }
+            else if(people.gender == "female")
+            {
+                pronoun = "She";
+            }
             else if (people.gender == "n/a")
             {
                 pronoun = "This droid";
@@ -51,7 +55,7 @@ namespace ChatBot
             }
 
             Say($"{people.name} has been in {people.films.Length} star wars films." +
-                $" {pronoun} has {hairColour} hair and {people.eye_color} eyes. They are from the planet {planets.name}");
+                $" {pronoun} has {hairColour} hair and {people.eye_color} eyes. {pronoun} is from the planet {planets.name}");
 
         }
 

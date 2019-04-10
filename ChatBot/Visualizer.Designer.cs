@@ -48,7 +48,7 @@
             this.txtOutput.Location = new System.Drawing.Point(128, 25);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(91, 66);
+            this.txtOutput.Size = new System.Drawing.Size(91, 344);
             this.txtOutput.TabIndex = 1;
             // 
             // lblInput
@@ -82,7 +82,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(231, 138);
+            this.ClientSize = new System.Drawing.Size(231, 381);
             this.Controls.Add(this.lblState);
             this.Controls.Add(this.lblOutput);
             this.Controls.Add(this.lblInput);

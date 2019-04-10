@@ -1,8 +1,13 @@
 hello
+who are you
 how are you
+are you self aware
+what can you do
 what time is it
 what is today
 open google
+recent
+tab
 open note pad
 close note pad
 spotify
@@ -14,7 +19,12 @@ good job
 joke
 whats my name
 shut down
-star
+star wars
 weather
-film
-1
+lottery
+search for
+thanks
+thank you
+funny
+haha
+movie

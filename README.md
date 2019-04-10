@@ -12,7 +12,7 @@ Current build:-
 
 - open/close programs
 
-- send keys to programs (spotify)
+- send keys to programs (spotify + chrome)
 
 - jokes from official_joke_api
 

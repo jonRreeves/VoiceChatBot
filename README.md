@@ -21,3 +21,7 @@ Current build:-
 - weather report using openweathermap api
 
 - IMDb data using OMDb api
+
+- search google from list of search terms
+
+- open links from list of favourites (opens random recipes that i like)

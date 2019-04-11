@@ -8,8 +8,6 @@ Current build:-
 
 - time/date
 
-- open google
-
 - open/close programs
 
 - send keys to programs (spotify + chrome)
@@ -22,6 +20,6 @@ Current build:-
 
 - IMDb data using OMDb api
 
-- search google from list of search terms
+- open links from list of favourites (opens random recipes that i like + favourite websites)
 
-- open links from list of favourites (opens random recipes that i like)
+- name/age/location variables now stored in txt file and can be overwritten

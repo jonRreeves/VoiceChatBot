@@ -4,7 +4,7 @@ how are you
 are you self aware
 what can you do
 what time is it
-what is today
+whats the date
 open google
 recent
 tab
@@ -16,15 +16,24 @@ pause
 skip
 back
 good job
-joke
-whats my name
+tell me a joke
+who am i
 shut down
 star wars
 weather
 lottery
-search for
+go to
 thanks
 thank you
 funny
 haha
 movie
+help
+fine
+thats nice
+pop up
+virus
+quote
+change name
+change age
+change location

@@ -139,9 +139,11 @@
   <ItemGroup>
     <Content Include="commands and responses\commands.txt" />
     <Content Include="commands and responses\movies.txt" />
+    <Content Include="commands and responses\name_age_location.txt" />
     <Content Include="commands and responses\recipes.txt" />
     <Content Include="commands and responses\responses.txt" />
     <Content Include="commands and responses\searchterms.txt" />
+    <Content Include="commands and responses\setup.txt" />
     <Content Include="commands and responses\swcommands.txt" />
     <Content Include="commands and responses\swresponses.txt" />
   </ItemGroup>

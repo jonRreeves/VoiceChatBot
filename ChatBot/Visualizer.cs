@@ -11,37 +11,30 @@ using ChatBot.Controllers.Weather;
 using static ChatBot.Models.Weather.WeatherModel;
 using ChatBot.Models;
 using ChatBot.Controllers;
+using System.Drawing;
 
 namespace ChatBot
 {
-    // TODO - states (menus) i.e certain actions can only be performed from certain states (custom dictionaries), prevents overlapping of keywords and confusion in one state
-    // setupState | keyword: setup | file: profile.txt (names, ages, location) 
-    // mainState | keyword: menu | file: commands.txt time/date functionality, open close programs, jokes, recall (name,age), weather report etc. anything that is not specific done
-    // starWarsState | keyword: star wars | file: starwars.txt done
-    // writingState | keyword: write | file dictionary.txt
-    // searchingState | keyword: search | file searchdictionary.txt
-
     // TODO - move states to own classes
     // each class needs to initialise its own grammar file + commands + choices
-
-    /* TODO - pass input from voice to query movie database
-       big dictionary 
-       try catch incase of 404
-       replace " " in strings with "_"
-    */
-
-    // TODO - figure out storing voice input in variables and using them in api queries | maybe use seperate form and listener for search features, so can use input as search term
 
     public partial class Visualizer : Form
     {
 
         // used to switch between forms, so that dictionaries (command files) do not overlap
-        public bool listening = true;
+        bool listening = true;
 
         // when "search for" is said, enters searching state
-        public bool searching = false;
+        bool searching = false;
 
-        public bool movie = false;
+        bool movie = false;
+
+        bool isSettingUp = false;
+        bool isSettingUpName = false;
+        bool isSettingUpAge = false;
+        bool isSettingUpLocation = false;
+
+        bool hasExplained = false;
 
         //Commands and responses
         string[] commandsFile = File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\commands.txt");
@@ -55,6 +48,29 @@ namespace ChatBot
 
         // movies file
         string[] moviesFile = File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\movies.txt");
+
+        // setup file
+        string[] setupFile = File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\setup.txt");
+
+        string[] detailsFile = File.ReadAllLines(@"C:\Users\Jon\Documents\jonvis commands\name_age_location.txt");
+
+        string name
+        {
+            get { return detailsFile[0]; }
+            set { detailsFile[0] = value; }
+        }
+
+        string age
+        {
+            get { return detailsFile[1]; }
+            set { detailsFile[1] = value; }
+        }
+        
+        string location
+        {
+            get { return detailsFile[2]; }
+            set { detailsFile[2] = value; }
+        }
 
         //Speech Synthesizer
         SpeechSynthesizer speechSynth = new SpeechSynthesizer();
@@ -71,12 +87,25 @@ namespace ChatBot
         Choices movieList = new Choices();
         SpeechRecognitionEngine movieRecognition = new SpeechRecognitionEngine();
 
+        // same as above
+        Choices setupList = new Choices();
+        SpeechRecognitionEngine setupRecognition = new SpeechRecognitionEngine();
+
+
         public Visualizer()
         {
 
             //Initialize Grammar (commands)
             commandsList.Add(commandsFile);
             Grammar grammar = new Grammar(new GrammarBuilder(commandsList));
+            string[] greetings = { $"hello {name}", $"Good day {name}", $"what now {name}?", $"we meet again {name}", $"i've been expecting you {name}",
+            $"greetings {name}", $"bonjour {name}", $"hello {name} this is microsoft tech support, are you aware there is a wirus on your computer?"};
+
+            Random r = new Random();
+
+            string greeting;
+
+            greeting = greetings[r.Next(greetings.Length)];
 
             try
             {
@@ -94,10 +123,9 @@ namespace ChatBot
             //Custom voice settings
             speechSynth.GetInstalledVoices();
             speechSynth.SelectVoice("Microsoft Zira Desktop");
-            speechSynth.Speak("Hello Jon, main menu");
+            speechSynth.Speak(greeting);
 
             InitializeComponent();
-            lblState.Text = "State: Main Menu";
         }
 
         // instantiate search state, new Grammar is needed so terms don't overlap
@@ -142,8 +170,16 @@ namespace ChatBot
                 }
                 else
                 {
-                    Say("Searching google for: " + result);
-                    Process.Start("https://google.com/#q=" + result);
+                    Say("Navigating to: " + result);
+                    if(result == "amazon")
+                    {
+                        Process.Start($"https://{result}.co.uk");
+                        Say("Do we really need more clutter?");
+                    }
+                    else
+                    {
+                        Process.Start($"https://{result}.com/");
+                    }                   
                     searching = false;
                 }
             }
@@ -199,6 +235,62 @@ namespace ChatBot
             }
 
             movieRecognition.UnloadAllGrammars();
+        }
+
+        public void SetupState()
+        {
+            setupList.Add(setupFile);
+            Grammar setupGrammar = new Grammar(new GrammarBuilder(setupList));
+
+            try
+            {
+                setupRecognition.RequestRecognizerUpdate();
+                setupRecognition.LoadGrammar(setupGrammar);
+                setupRecognition.SpeechRecognized += setup_SpeechRecognized;
+                setupRecognition.SetInputToDefaultAudioDevice();
+                setupRecognition.RecognizeAsync(RecognizeMode.Multiple);
+            }
+            catch
+            {
+                return;
+            }
+        }
+
+        private void setup_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            string result = e.Result.Text;
+
+            if (isSettingUp)
+            {
+                if (isSettingUpName)
+                {
+                    name = result;                    
+                    Say("Name set to: " + name);
+                    detailsFile[0] = name;
+
+                    isSettingUpName = false;
+                }
+                if (isSettingUpAge)
+                {
+                    age = result;
+                    Say("Age set to: " + age);
+                    detailsFile[1] = age;
+                    isSettingUpAge = false;
+                }
+                if (isSettingUpLocation)
+                {
+                    location = result;
+                    Say("Location set to: " + location);
+                    detailsFile[2] = location;
+                    isSettingUpLocation = false;
+                }
+
+                File.WriteAllLines(@"C:\Users\Jon\Documents\jonvis commands\name_age_location.txt", detailsFile);
+            }
+
+            isSettingUp = false;
+       
+            setupRecognition.UnloadAllGrammars();
         }
 
 
@@ -315,17 +407,17 @@ namespace ChatBot
         private void menu_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             if (listening)
-            {
-                if (!searching && !movie)
+            {              
+
+                if (!searching && !movie && !isSettingUp)
                 {
-                    //bool isNotepadOpen = false;
                     string result = e.Result.Text;
                     int response = Array.IndexOf(commandsFile, result);
                     txtInput.AppendText(result + "\n");
 
                     if (responseFile[response].IndexOf('+') == 0)
                     {
-                        List<string> responses = responseFile[response].Replace('+', ' ').Split('/').Reverse().ToList();
+                        List<string> responses = responseFile[response].Replace('+', ' ').Replace("name",name).Split('/').Reverse().ToList();
                         Random r = new Random();
                         Say(responses[r.Next(responses.Count)]);
                     }
@@ -333,9 +425,9 @@ namespace ChatBot
                     {
                         if (responseFile[response].IndexOf('*') == 0)
                         {
-                            if (result.Contains("search for"))
+                            if (result.Contains("go to"))
                             {
-                                Say("What would you like me to search for?");
+                                Say("Where do you want to go?");
                                 searching = true;
                                 SearchState();
                             }
@@ -345,15 +437,15 @@ namespace ChatBot
                                 movie = true;
                                 MovieState();
                             }
-                            if (result.Contains("time"))
+                            if (result.Contains("what time is it"))
                             {
                                 Say(DateTime.Now.ToString("h:mm tt"));
                             }
-                            if (result.Contains("today"))
+                            if (result.Contains("whats the date"))
                             {
-                                Say(DateTime.Now.ToString("dddd,dd MMMM yyyy"));
+                                Say(DateTime.Now.ToString("dddd, dd MMMM yyyy"));
                             }
-                            if (result.Contains("google"))
+                            if (result.Contains("open google"))
                             {
                                 Say("Opening google");
                                 Process.Start("https://google.com");
@@ -366,15 +458,16 @@ namespace ChatBot
                             {
                                 SendKeys.Send("^w");
                             }
-                            if (result.Contains("notepad"))
+                            if (result.Contains("open note pad"))
                             {
                                 Say("Opening Sublime Text");
                                 Process.Start(@"C:\Program Files\Sublime Text 3\sublime_text.exe");
                                 //isNotepadOpen = true;
                                 //Say("Would you like to begin writing?");
                             }
-                            if (result.Contains("close"))
+                            if (result.Contains("close note pad"))
                             {
+                                Say("Closing Sublime Text");
                                 CloseProgram("sublime_text");
                                 //isNotepadOpen = false;
                             }
@@ -395,16 +488,23 @@ namespace ChatBot
                             {
                                 SendKeys.Send("^{LEFT}");
                             }
-                            if (result.Contains("name"))
+                            if (result.Contains("who am i"))
                             {
-                                // TODO - update this with name variable, maybe store it to file when you open the program
-                                Say("Your name is Jon");
+
+                                Say($"Your name is {name}. You are {age}. You are from {location}");
+
+                                if (!hasExplained)
+                                {
+                                    Say("To change your name, say \"change name\". To change your age, say \"change age\". " +
+                                        "To change your location, say \"change location\"");
+                                    hasExplained = true;
+                                }
                             }
-                            if (result.Contains("shut"))
+                            if (result.Contains("shut down"))
                             {
                                 Environment.Exit(0);
                             }
-                            if (result.Contains("star"))
+                            if (result.Contains("star wars"))
                             {
                                 Hide();
                                 StarWarsVisualizer swv = new StarWarsVisualizer();
@@ -414,15 +514,46 @@ namespace ChatBot
                             }
                             if (result.Contains("weather"))
                             {
-                                GetWeather("bournemouth");
+                                GetWeather(location);
                             }
-                            if (result.Contains("joke"))
+                            if (result.Contains("tell me a joke"))
                             {
                                 GetJoke();
                             }
-                            if (result.Contains("lot"))
+                            if (result.Contains("lottery"))
                             {
                                 Say("Your Numbers Today: " + Lotto());
+                            }
+                            if (result.Contains("help"))
+                            {
+                                var message = string.Join("\n", commandsFile);
+                                MessageBox.Show("Command list: \n" + message);
+                                //txtOutput.AppendText("Command list: \n");
+                                //foreach (var line in commandsFile)
+                                //{
+                                //    txtOutput.AppendText(line + "\n");
+                                //}
+                            }
+                            if (result.Contains("change name"))
+                            {
+                                Say("What is your name?");
+                                isSettingUp = true;
+                                isSettingUpName = true;
+                                SetupState();
+                            }
+                            if(result.Contains("change age"))
+                            {
+                                Say("How old are you?");
+                                isSettingUp = true;
+                                isSettingUpAge = true;
+                                SetupState();
+                            }
+                            if(result.Contains("change location"))
+                            {
+                                Say("Where are you from?");
+                                isSettingUp = true;
+                                isSettingUpLocation = true;
+                                SetupState();
                             }
 
                             // TODO - speech to text / write to notepad

@@ -12,7 +12,7 @@ Current build:-
 
 - open/close programs
 
-- send keys to programs (spotify)
+- send keys to programs (spotify + chrome)
 
 - jokes from official_joke_api
 
@@ -21,3 +21,7 @@ Current build:-
 - weather report using openweathermap api
 
 - IMDb data using OMDb api
+
+- search google from list of search terms
+
+- open links from list of favourites (opens random recipes that i like)

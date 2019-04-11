@@ -37,59 +37,67 @@
             // 
             // txtInput
             // 
-            this.txtInput.Location = new System.Drawing.Point(12, 25);
+            this.txtInput.Location = new System.Drawing.Point(12, 51);
             this.txtInput.Multiline = true;
             this.txtInput.Name = "txtInput";
-            this.txtInput.Size = new System.Drawing.Size(91, 66);
+            this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtInput.Size = new System.Drawing.Size(122, 169);
             this.txtInput.TabIndex = 0;
             // 
             // txtOutput
             // 
-            this.txtOutput.Location = new System.Drawing.Point(128, 25);
+            this.txtOutput.Location = new System.Drawing.Point(150, 51);
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.Size = new System.Drawing.Size(91, 344);
+            this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtOutput.Size = new System.Drawing.Size(123, 169);
             this.txtOutput.TabIndex = 1;
             // 
             // lblInput
             // 
             this.lblInput.AutoSize = true;
-            this.lblInput.Location = new System.Drawing.Point(12, 9);
+            this.lblInput.Location = new System.Drawing.Point(12, 33);
             this.lblInput.Name = "lblInput";
-            this.lblInput.Size = new System.Drawing.Size(30, 13);
+            this.lblInput.Size = new System.Drawing.Size(33, 15);
             this.lblInput.TabIndex = 2;
-            this.lblInput.Text = "input";
+            this.lblInput.Text = "YOU:";
             // 
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
-            this.lblOutput.Location = new System.Drawing.Point(125, 9);
+            this.lblOutput.Location = new System.Drawing.Point(147, 33);
             this.lblOutput.Name = "lblOutput";
-            this.lblOutput.Size = new System.Drawing.Size(37, 13);
+            this.lblOutput.Size = new System.Drawing.Size(48, 15);
             this.lblOutput.TabIndex = 3;
-            this.lblOutput.Text = "output";
+            this.lblOutput.Text = "JONVIS:";
             // 
             // lblState
             // 
-            this.lblState.AutoSize = true;
-            this.lblState.Location = new System.Drawing.Point(12, 110);
+            this.lblState.BackColor = System.Drawing.Color.Lime;
+            this.lblState.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblState.Location = new System.Drawing.Point(-7, -1);
             this.lblState.Name = "lblState";
-            this.lblState.Size = new System.Drawing.Size(115, 13);
+            this.lblState.Padding = new System.Windows.Forms.Padding(5);
+            this.lblState.Size = new System.Drawing.Size(301, 25);
             this.lblState.TabIndex = 4;
-            this.lblState.Text = "State: Star Wars Menu";
+            this.lblState.Text = "Listening";
+            this.lblState.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // StarWarsVisualizer
+            // Visualizer
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(231, 381);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(285, 235);
             this.Controls.Add(this.lblState);
             this.Controls.Add(this.lblOutput);
             this.Controls.Add(this.lblInput);
             this.Controls.Add(this.txtOutput);
             this.Controls.Add(this.txtInput);
+            this.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "StarWarsVisualizer";
+            this.Name = "Visualizer";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "jonvis";
             this.ResumeLayout(false);
             this.PerformLayout();

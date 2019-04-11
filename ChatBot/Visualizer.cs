@@ -22,7 +22,7 @@ namespace ChatBot
     {
 
         // used to switch between forms, so that dictionaries (command files) do not overlap
-        bool listening = true;
+        public bool listening = true;
 
         // when "search for" is said, enters searching state
         bool searching = false;

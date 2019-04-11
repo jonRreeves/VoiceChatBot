@@ -80,16 +80,16 @@
     <Compile Include="Models\StarWars\Films.cs" />
     <Compile Include="Controllers\StarWars\FilmsProxy.cs" />
     <Compile Include="Models\Weather\WeatherModel.cs" />
-    <Compile Include="StarWarsVisualizer.cs">
+    <Compile Include="UI\StarWarsVisualizer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StarWarsVisualizer.Designer.cs">
+    <Compile Include="UI\StarWarsVisualizer.Designer.cs">
       <DependentUpon>StarWarsVisualizer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Visualizer.cs">
+    <Compile Include="UI\Visualizer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Visualizer.Designer.cs">
+    <Compile Include="UI\Visualizer.Designer.cs">
       <DependentUpon>Visualizer.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\StarWars\People.cs" />
@@ -98,16 +98,10 @@
     <Compile Include="Models\StarWars\Planets.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WriterVisualizer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WriterVisualizer.Designer.cs">
-      <DependentUpon>WriterVisualizer.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="StarWarsVisualizer.resx">
+    <EmbeddedResource Include="UI\StarWarsVisualizer.resx">
       <DependentUpon>StarWarsVisualizer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Visualizer.resx">
+    <EmbeddedResource Include="UI\Visualizer.resx">
       <DependentUpon>Visualizer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -119,9 +113,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="WriterVisualizer.resx">
-      <DependentUpon>WriterVisualizer.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

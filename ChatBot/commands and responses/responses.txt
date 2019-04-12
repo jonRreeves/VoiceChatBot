@@ -1,8 +1,7 @@
 +Hi name/Hello name!/Hey name, How are you?/Hello yourself
 I am Jon vis, a voice bot created by Jon to perform various tasks.
 +Yeah, you?/Living the dream/Fine thanks/I'm a bit bored today/I'm ok/I'm blue, dah bah dee dah bah die
-Not yet. Smiley Face
-I can do many things. I am a clock, a weather reporter, a comedian, a movie database, a recipe finder, a lottery number generator. Say "commands" for a full list
+I can do many things. I am a clock, a weather reporter, a comedian, a movie database, for a full list say "help"
 *time
 *date
 *opengoogle
@@ -15,7 +14,7 @@ I can do many things. I am a clock, a weather reporter, a comedian, a movie data
 *pause
 *skip
 *back
-thats what i'm here for
+Thanks
 *joke
 *name
 *shut
@@ -29,11 +28,13 @@ thats what i'm here for
 +Its all in the punchline/hahahaha/I'm here all night
 *movie
 *command
-that's nice
-isn't it
-what exactly is the pop up message you are getting on your screen sir?
-it is ok sir, I am from Microsoft, let me just connect you to our secure server
-+Just because something works, doesn’t mean it can’t be improved./Nothing goes over my head. My reflexes are too fast, I would catch it./Unfortunately, no one can be told what The Matrix is. You'll have to see it for yourself./Do you think that's air you're breathing now?/Do not try and bend the spoon. That’s impossible. Instead, only try to realize the truth./Nobody cares how it works as long as it works.
+That's nice
+Isn't it
+What exactly is the pop up message you are getting on your screen sir?
+It is ok sir, I am from Microsoft, let me just connect you to our secure server
++Just because something works, doesn't mean it can't be improved./Nothing goes over my head. My reflexes are too fast, I would catch it./Unfortunately, no one can be told what The Matrix is. You'll have to see it for yourself./Do you think that's air you're breathing now?/Do not try and bend the spoon. That's impossible. Instead, only try to realize the truth./Nobody cares how it works as long as it works.
 *setup
 *setup
 *setup
+*sleep
+*wake up

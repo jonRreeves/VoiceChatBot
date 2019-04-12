@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatBot.Controllers.Weather;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -68,5 +69,6 @@ namespace ChatBot.Models.Weather
             public string name { get; set; }
             public int cod { get; set; }
         }
+
     }
 }

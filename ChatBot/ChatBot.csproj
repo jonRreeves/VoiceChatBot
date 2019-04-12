@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NAudio, Version=1.8.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.1.8.5\lib\net35\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -71,21 +74,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\MovieProxy.cs" />
+    <Compile Include="Controllers\Movie\MovieProxy.cs" />
     <Compile Include="Controllers\JokeProxy.cs" />
-    <Compile Include="Controllers\Weather\WeatherHourlyModel.cs" />
+    <Compile Include="Models\Weather\WeatherHourlyModel.cs" />
     <Compile Include="Controllers\Weather\WeatherProxy.cs" />
     <Compile Include="Models\JokeModel.cs" />
-    <Compile Include="Models\MovieModel.cs" />
+    <Compile Include="Models\Movie\MovieModel.cs" />
     <Compile Include="Models\StarWars\Films.cs" />
     <Compile Include="Controllers\StarWars\FilmsProxy.cs" />
     <Compile Include="Models\Weather\WeatherModel.cs" />
-    <Compile Include="UI\StarWarsVisualizer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\StarWarsVisualizer.Designer.cs">
-      <DependentUpon>StarWarsVisualizer.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Visualizer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,9 +95,6 @@
     <Compile Include="Models\StarWars\Planets.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="UI\StarWarsVisualizer.resx">
-      <DependentUpon>StarWarsVisualizer.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Visualizer.resx">
       <DependentUpon>Visualizer.cs</DependentUpon>
     </EmbeddedResource>
@@ -128,15 +122,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="commands and responses\commands.txt" />
-    <Content Include="commands and responses\movies.txt" />
-    <Content Include="commands and responses\name_age_location.txt" />
-    <Content Include="commands and responses\recipes.txt" />
-    <Content Include="commands and responses\responses.txt" />
-    <Content Include="commands and responses\searchterms.txt" />
-    <Content Include="commands and responses\setup.txt" />
-    <Content Include="commands and responses\swcommands.txt" />
-    <Content Include="commands and responses\swresponses.txt" />
+    <Content Include="Commands and Responses\commands.txt" />
+    <Content Include="Commands and Responses\movies.txt" />
+    <Content Include="Commands and Responses\name_age_location.txt" />
+    <Content Include="Commands and Responses\recipes.txt" />
+    <Content Include="Commands and Responses\responses.txt" />
+    <Content Include="Commands and Responses\searchterms.txt" />
+    <Content Include="Commands and Responses\setup.txt" />
+    <Content Include="Commands and Responses\swcommands.txt" />
+    <Content Include="Commands and Responses\swresponses.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

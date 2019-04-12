@@ -14,7 +14,7 @@ namespace ChatBot.Controllers
     {
         public async static Task<MovieModel> GetMovieConnector(string filmId)
         {
-            var apiKey = "4c3b7edc";
+            //var apiKey = "4c3b7edc";
             var http = new HttpClient();
             var url = string.Format("http://www.omdbapi.com/?i={0}&apikey=4c3b7edc",filmId);
             var response = await http.GetAsync(url);
@@ -28,7 +28,7 @@ namespace ChatBot.Controllers
 
         public async static Task<MovieModel> GetMovieByTitle(string filmId)
         {
-            var apiKey = "4c3b7edc";
+            //var apiKey = "4c3b7edc";
             var http = new HttpClient();
             var url = string.Format("http://www.omdbapi.com/?t={0}&apikey=4c3b7edc", filmId);
             var response = await http.GetAsync(url);

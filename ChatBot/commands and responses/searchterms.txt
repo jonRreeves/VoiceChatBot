@@ -1,12 +1,9 @@
 youtube
 stack overflow
-git hub
-just eat
-funny cat videos
+github
 reddit
 gmail
 amazon
-chicken recipes
-pork recipes
-burger recipes
 random recipe
+menu
+help

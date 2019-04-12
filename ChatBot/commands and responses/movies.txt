@@ -249,3 +249,5 @@ Lagaan: Once Upon a Time in India
 Paris, Texas
 Akira
 random
+menu
+help

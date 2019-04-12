@@ -10,3 +10,4 @@ attack of the clones
 revenge of the sith
 the force awakens
 menu
+help

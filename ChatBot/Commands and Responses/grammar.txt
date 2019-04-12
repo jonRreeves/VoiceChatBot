@@ -1,6 +1,7 @@
-hello
+﻿hello
 who are you
 how are you
+are you self aware
 what can you do
 what time is it
 whats the date
@@ -36,5 +37,29 @@ quote
 change name
 change age
 change location
-sleep
-wake up
+random
+youtube
+stack overflow
+github
+reddit
+gmail
+amazon
+random recipe
+Jon
+Emily
+23
+24
+Ferndown
+Bournemouth
+luke
+r 2
+tatooine
+naboo
+a new hope
+the empire strikes back
+return of the jedi
+the phantom menace
+attack of the clones
+revenge of the sith
+the force awakens
+menu
